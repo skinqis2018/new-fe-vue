@@ -23,11 +23,32 @@
       </div>
     </div>
     <div class="header__right">
-      <div class="header__item">
+      <div v-if="Number(userId) > 0" class="header__item">
         <a>您好，</a>
       </div>
-      <div class="header__item">
-        <a>skinqis</a>
+      <div v-if="Number(userId) > 0" class="header__item">
+        <a>{{ userName }}</a>
+      </div>
+      <div
+        v-if="Number(userId) > 0"
+        @click="$emit('logout')"
+        class="header__item"
+      >
+        <a>退出</a>
+      </div>
+      <div
+        v-if="Number(userId) == 0"
+        class="header__item"
+        @click="$emit('loginShow')"
+      >
+        <a>登录</a>
+      </div>
+      <div
+        v-if="Number(userId) == 0"
+        class="header__item"
+        @click="$emit('registShow')"
+      >
+        <a>注册</a>
       </div>
       <div class="header__item">
         <el-dropdown class="header__item_box">
@@ -88,6 +109,24 @@ export default {
       activeIndex: "1",
       mobileOptions: MOBILEOPTIONS,
     };
+  },
+  computed: {
+    userId: {
+      get() {
+        return this.$store.state.user.id;
+      },
+      set(val) {
+        this.$store.commit("user/updateId", val);
+      },
+    },
+    userName: {
+      get() {
+        return this.$store.state.user.name;
+      },
+      set(val) {
+        this.$store.commit("user/updateName", val);
+      },
+    },
   },
 };
 </script>
