@@ -4,10 +4,10 @@
       <swiper class="left__swiper" :options="swiperOptions">
         <swiper-slide
           class="left__swiper_item"
-          v-for="item in topList"
-          :key="item.poster"
+          v-for="item in list"
+          :key="item.newsId"
         >
-          <img :src="item.poster" />
+          <img :src="item.url" />
           <span>{{ item.title }}</span>
         </swiper-slide>
       </swiper>
@@ -34,6 +34,12 @@ export default {
     Swiper,
     SwiperSlide,
   },
+  props: {
+    list: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       swiperOptions: {
@@ -43,20 +49,6 @@ export default {
         },
         loop: true,
       },
-      topList: [
-        {
-          poster:
-            "//n.sinaimg.cn/baby/transform/590/w240h350/20210511/a070-kpuunne2288908.jpg",
-          title: "孙莉晒与多多假期游玩合照",
-          link: "http://slide.baby.sina.com.cn/mxx/slide_10_846_774384.html",
-        },
-        {
-          poster:
-            "//n.sinaimg.cn/fashion/590/w240h350/20210516/34df-kpzzqna6013955.jpg",
-          title: "“编织单品”成为辣妹新欢",
-          link: "//fashion.sina.com.cn/we/2021-05-16/0759/doc-ikmxzfmm1766221.shtml",
-        },
-      ],
     };
   },
 };

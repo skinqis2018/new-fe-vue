@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-loading.fullscreen.lock="loading">
     <el-container>
       <el-header height=".82rem">
         <Header
@@ -9,7 +9,7 @@
         />
       </el-header>
       <el-main>
-        <Main />
+        <Main :leftList="leftList" :midList="midList" :rightList="rightList" />
       </el-main>
     </el-container>
 
@@ -48,17 +48,13 @@
         :model="regist"
         :rules="dataRule"
         ref="regist"
-        @keyup.enter.native="dataFormSubmit()"
+        @keyup.enter.native="registFormSubmit()"
         label-width="80px"
       >
         <el-form-item label="用户名" prop="userName">
           <el-input v-model="regist.userName" placeholder="登录帐号"></el-input>
         </el-form-item>
-        <el-form-item
-          label="密码"
-          prop="password"
-          :class="{ 'is-required': !regist.id }"
-        >
+        <el-form-item label="密码" prop="password" class="is-required">
           <el-input
             v-model="regist.password"
             type="password"
@@ -68,7 +64,7 @@
         <el-form-item
           label="确认密码"
           prop="comfirmPassword"
-          :class="{ 'is-required': !regist.id }"
+          class="is-required"
         >
           <el-input
             v-model="regist.comfirmPassword"
@@ -76,17 +72,8 @@
             placeholder="确认密码"
           ></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="regist.email" placeholder="邮箱"></el-input>
-        </el-form-item>
         <el-form-item label="手机号" prop="mobile">
           <el-input v-model="regist.mobile" placeholder="手机号"></el-input>
-        </el-form-item>
-        <el-form-item label="状态" size="mini" prop="status">
-          <el-radio-group v-model="regist.status">
-            <el-radio :label="0">禁用</el-radio>
-            <el-radio :label="1">正常</el-radio>
-          </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -105,16 +92,16 @@ import { isEmail, isMobile } from "@/utils/validate";
 export default {
   data() {
     var validatePassword = (rule, value, callback) => {
-      if (!this.dataForm.id && !/\S/.test(value)) {
+      if (!/\S/.test(value)) {
         callback(new Error("密码不能为空"));
       } else {
         callback();
       }
     };
     var validateComfirmPassword = (rule, value, callback) => {
-      if (!this.dataForm.id && !/\S/.test(value)) {
+      if (!/\S/.test(value)) {
         callback(new Error("确认密码不能为空"));
-      } else if (this.dataForm.password !== value) {
+      } else if (this.regist.password !== value) {
         callback(new Error("确认密码与密码输入不一致"));
       } else {
         callback();
@@ -147,7 +134,7 @@ export default {
         password: "",
         comfirmPassword: "",
         salt: "",
-        email: "",
+        email: "demo@demo.com",
         mobile: "",
         roleIdList: [],
         status: 1,
@@ -169,6 +156,10 @@ export default {
           { validator: validateMobile, trigger: "blur" },
         ],
       },
+      leftList: [],
+      midList: [],
+      rightList: [],
+      loading: true,
     };
   },
   components: {
@@ -204,7 +195,7 @@ export default {
       this.$refs["regist"].validate((valid) => {
         if (valid) {
           this.$http({
-            url: this.$http.adornUrl(`/sys/user/save`),
+            url: this.$http.adornUrl(`/sys/user/regist`),
             method: "post",
             data: this.$http.adornData({
               userId: this.regist.id || undefined,
@@ -223,12 +214,15 @@ export default {
                 type: "success",
                 duration: 1500,
                 onClose: () => {
-                  this.visible = false;
-                  this.$emit("refreshDataList");
+                  this.closeRregist();
                 },
               });
             } else {
-              this.$message.error(data.msg);
+              let msg = data.msg;
+              if (msg == "数据库中已存在该记录") {
+                msg = "用户已被占用";
+              }
+              this.$message.error(msg);
             }
           });
         }
@@ -263,7 +257,26 @@ export default {
           this.loading = false;
           this.userId = data.user.userId;
           this.userName = data.user.username;
+          this.loading = false;
+          this.getData();
           this.closeLogin();
+        }
+      });
+    },
+    getData() {
+      this.$http({
+        url: this.$http.adornUrl(
+          `/generator/news/list?page=1&limit=30&flag=1&userid=${this.userId}`
+        ),
+        method: "get",
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          let list = data.page.list;
+          this.leftList = list.slice(0, 4);
+          this.midList = list.slice(4, 16);
+          this.rightList = list.slice(16, 28);
+        } else {
+          this.$message.error(data.msg);
         }
       });
     },
@@ -271,12 +284,21 @@ export default {
   created() {
     this.form.uuid = getUUID();
   },
-  mounted() {
+  beforeMount() {
     let token = Vue.cookie.get("token");
     if (token) {
       this.getUserInfo();
+    } else {
+      this.loading = false;
+      this.getData();
     }
   },
+
+  // data: this.$http.adornData({
+  //   page: 1,
+  //   limit: 30,
+  //   key: 123
+  // }),
   computed: {
     userId: {
       get() {

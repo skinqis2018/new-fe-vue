@@ -1,8 +1,8 @@
 <template>
   <div class="content">
-    <Left class="content__left" />
-    <Middle class="content__middle" />
-    <Right class="content__right" />
+    <Left :list="leftList" class="content__left" />
+    <Middle :list="midList" class="content__middle" />
+    <Right :list="rightList" class="content__right" />
   </div>
 </template>
 
@@ -15,6 +15,20 @@ export default {
     Left,
     Middle,
     Right,
+  },
+  props: {
+    leftList: {
+      type: Array,
+      default: () => [],
+    },
+    midList: {
+      type: Array,
+      default: () => [],
+    },
+    rightList: {
+      type: Array,
+      default: () => [],
+    },
   },
 };
 </script>

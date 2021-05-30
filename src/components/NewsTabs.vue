@@ -2,15 +2,17 @@
   <el-tabs type="card">
     <el-tab-pane v-for="item in news" :key="item.label" :label="item.label">
       <div class="news_tabs__top" v-if="item.top && item.top.length > 0">
-        <div class="news_tabs__top_item" v-for="pic in item.top" :key="pic.img">
-          <img :src="pic.img" />
-          <span>{{ pic.name }}</span>
+        <div
+          class="news_tabs__top_item"
+          v-for="pic in item.top"
+          :key="pic.newsId"
+        >
+          <img :src="pic.url" />
+          <span>{{ pic.title }}</span>
         </div>
       </div>
       <div class="news_tabs__body">
-        <a v-for="(text, index) in item.body" :key="index">
-          ·{{ text.title }}
-        </a>
+        <a v-for="text in item.body" :key="text.newId"> ·{{ text.title }} </a>
       </div>
     </el-tab-pane>
   </el-tabs>
@@ -75,6 +77,10 @@ list-a a:link {
       color: #122e67;
       text-decoration: none;
       font-size: 0.28rem;
+      max-width: 90%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

@@ -2,7 +2,7 @@
   <div class="main">
     <Search />
     <Channel />
-    <Content />
+    <Content :leftList="leftList" :midList="midList" :rightList="rightList" />
   </div>
 </template>
 
@@ -15,6 +15,20 @@ export default {
     Search,
     Channel,
     Content,
+  },
+  props: {
+    leftList: {
+      type: Array,
+      default: () => [],
+    },
+    midList: {
+      type: Array,
+      default: () => [],
+    },
+    rightList: {
+      type: Array,
+      default: () => [],
+    },
   },
 };
 </script>
