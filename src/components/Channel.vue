@@ -1,7 +1,9 @@
 <template>
   <div class="channel">
     <div class="channel__mode">
-      <div v-for="i in 12" :key="i" class="channel__item">新闻</div>
+      <div v-for="i in demoList" :key="i" class="channel__item">
+        {{ i.name }}
+      </div>
     </div>
     <el-divider class="channel__divider" direction="vertical"></el-divider>
     <div class="channel__mode">
@@ -38,7 +40,26 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      demoList: [
+        { name: "体育" },
+        { name: "娱乐" },
+        { name: "实事" },
+        { name: "军事" },
+        { name: "时尚" },
+        { name: "历史" },
+        { name: "人文" },
+        { name: "股票" },
+        { name: "买车" },
+        { name: "天气" },
+        { name: "留学" },
+        { name: "司法" },
+      ],
+    };
+  },
+};
 </script>
 
 <style lang="less" scoped>
