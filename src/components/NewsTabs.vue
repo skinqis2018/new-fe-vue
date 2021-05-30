@@ -6,13 +6,20 @@
           class="news_tabs__top_item"
           v-for="pic in item.top"
           :key="pic.newsId"
+          @click="clickHandle(pic)"
         >
           <img :src="pic.url" />
           <span>{{ pic.title }}</span>
         </div>
       </div>
       <div class="news_tabs__body">
-        <a v-for="text in item.body" :key="text.newId"> ·{{ text.title }} </a>
+        <a
+          v-for="text in item.body"
+          @click="clickHandle(text)"
+          :key="text.newId"
+        >
+          ·{{ text.title }}
+        </a>
       </div>
     </el-tab-pane>
   </el-tabs>
@@ -29,6 +36,7 @@ export default {
       default: () => [],
     },
   },
+  inject: ["clickHandle"],
 };
 </script>
 

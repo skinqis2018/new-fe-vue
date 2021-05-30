@@ -7,7 +7,7 @@
           v-for="item in list"
           :key="item.newsId"
         >
-          <img :src="item.url" />
+          <img :src="item.url" @click="clickHandle(item)" />
           <span>{{ item.title }}</span>
         </swiper-slide>
       </swiper>
@@ -51,6 +51,7 @@ export default {
       },
     };
   },
+  inject: ["clickHandle"],
 };
 </script>
 <style lang="less" scoped>
