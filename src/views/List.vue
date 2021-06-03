@@ -68,7 +68,11 @@ export default {
   },
   methods: {
     load() {
-      this.key = this.$route.query.key;
+      let key = this.$route.query.key;
+      if (key) {
+        key = encodeURIComponent(key)
+      }
+      this.key = key
       let chanel = this.$route.params.chanel;
       if (chanel === "all") {
         chanel = null;
@@ -76,6 +80,7 @@ export default {
       this.chanel = chanel;
       this.getDataList();
     },
+    
     getDataList() {
       this.$http({
         url: this.$http.adornUrl(`/generator/news/search`),
