@@ -13,13 +13,16 @@
         </div>
       </div>
       <div class="news_tabs__body">
-        <a
+        <el-link
+          type="primary"
+          :underline="false"
+          icon="el-icon-info"
           v-for="text in item.body"
           @click="clickHandle(text)"
           :key="text.newId"
         >
-          ·{{ text.title }}
-        </a>
+          {{ text.title }}
+        </el-link>
       </div>
     </el-tab-pane>
   </el-tabs>
@@ -41,15 +44,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-list-a a:link {
-  color: #122e67;
-  text-decoration: none;
-}
-.list-a a.list-a a:hover,
-.list-a a:active {
-  color: #ff8400;
-  text-decoration: underline;
-}
 .news_tabs {
   &__top {
     width: 100%;
@@ -60,6 +54,9 @@ list-a a:link {
       width: 2.1rem;
       aspect-ratio: auto 105 / 70;
       height: 1.4rem;
+      &:hover {
+        cursor: pointer;
+      }
     }
     span {
       width: 2.1rem;
@@ -69,6 +66,12 @@ list-a a:link {
       line-height: 0.4rem;
       display: block;
       background: #000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &:hover {
+        cursor: pointer;
+      }
     }
     &-item {
       width: 2.1rem;
@@ -82,7 +85,6 @@ list-a a:link {
       display: block;
       height: 0.5rem;
       line-height: 0.5rem;
-      color: #122e67;
       text-decoration: none;
       font-size: 0.28rem;
       max-width: 90%;

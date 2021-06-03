@@ -12,3 +12,19 @@ export const MOBILEOPTIONS = [
     link: "https://finance.sina.com.cn/mobile/comfinanceweb.shtml",
   },
 ];
+export const CHANELS = [
+  "体育",
+  "娱乐",
+  "行业",
+  "教育",
+  "法律",
+  "社会",
+  "国际",
+  "科技",
+  "财经",
+  "经济",
+  "军事",
+  "时尚",
+  "休闲",
+  "音乐",
+];

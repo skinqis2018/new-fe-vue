@@ -2,10 +2,10 @@
   <div class="header">
     <div class="header__left">
       <div class="header__item">
-        <a>设为首页</a>
+        <el-link>设为首页</el-link>
       </div>
       <div class="header__item">
-        <a>手机新浪网</a>
+        <el-link>手机新浪网</el-link>
       </div>
       <div class="header__item">
         <el-dropdown class="header__item_box">
@@ -13,42 +13,46 @@
             移动客户端<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>新浪微博</el-dropdown-item>
-            <el-dropdown-item divided>新浪微博</el-dropdown-item>
-            <el-dropdown-item divided>新浪微博</el-dropdown-item>
-            <el-dropdown-item divided>新浪微博</el-dropdown-item>
-            <el-dropdown-item divided>新浪微博</el-dropdown-item>
+            <el-dropdown-item
+              v-for="(item, index) in mobileOptions"
+              :key="index"
+              :divided="index !== 0"
+            >
+              <el-link :underline="false" :href="item.link" target="_blank">{{
+                item.name
+              }}</el-link>
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
     </div>
     <div class="header__right">
       <div v-if="Number(userId) > 0" class="header__item">
-        <a>您好，</a>
+        <span>您好，</span>
       </div>
       <div v-if="Number(userId) > 0" class="header__item">
-        <a>{{ userName }}</a>
+        <el-link>{{ userName }}</el-link>
       </div>
       <div
         v-if="Number(userId) > 0"
         @click="$emit('logout')"
         class="header__item"
       >
-        <a>退出</a>
+        <el-link>退出</el-link>
       </div>
       <div
         v-if="Number(userId) == 0"
         class="header__item"
         @click="$emit('loginShow')"
       >
-        <a>登录</a>
+        <el-link type="primary">登录</el-link>
       </div>
       <div
         v-if="Number(userId) == 0"
         class="header__item"
         @click="$emit('registShow')"
       >
-        <a>注册</a>
+        <el-link type="primary">注册</el-link>
       </div>
       <div class="header__item">
         <el-dropdown class="header__item_box">
@@ -95,7 +99,7 @@
         </el-dropdown>
       </div>
       <div class="header__item">
-        <a>网站导航</a>
+        <el-link>网站导航</el-link>
       </div>
     </div>
   </div>

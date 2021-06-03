@@ -71,6 +71,9 @@ export default {
       img {
         width: 100%;
         height: 100%;
+        &:hover {
+          cursor: pointer;
+        }
       }
       span {
         box-sizing: border-box;
@@ -84,6 +87,9 @@ export default {
         line-height: 0.72rem;
         text-align: center;
         background: rgba(255, 255, 255, 0.8);
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }

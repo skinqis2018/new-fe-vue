@@ -1,30 +1,62 @@
 <template>
   <div class="channel">
     <div class="channel__mode">
-      <div v-for="i in demoList" :key="i" class="channel__item">
-        {{ i.name }}
+      <div
+        v-for="(chanel, index) in CHANELS.slice(0, 12)"
+        :key="index"
+        class="channel__item"
+      >
+        <router-link :to="`/list/${index}`">{{ chanel }}</router-link>
       </div>
     </div>
     <el-divider class="channel__divider" direction="vertical"></el-divider>
     <div class="channel__mode">
-      <div v-for="i in 12" :key="i" class="channel__item">新闻</div>
+      <div
+        v-for="(chanel, index) in CHANELS.slice(1, 13)"
+        :key="index"
+        class="channel__item"
+      >
+        <router-link :to="`/list/${index}`">{{ chanel }}</router-link>
+      </div>
     </div>
     <el-divider class="channel__divider" direction="vertical"></el-divider>
     <div class="channel__mode">
-      <div v-for="i in 12" :key="i" class="channel__item">新闻</div>
+      <div
+        v-for="(chanel, index) in CHANELS.slice(2, 14)"
+        :key="index"
+        class="channel__item"
+      >
+        <router-link :to="`/list/${index}`">{{ chanel }}</router-link>
+      </div>
     </div>
     <el-divider class="channel__divider" direction="vertical"></el-divider>
     <div class="channel__mode">
-      <div v-for="i in 12" :key="i" class="channel__item">新闻</div>
+      <div
+        v-for="(chanel, index) in CHANELS.slice(0, 12)"
+        :key="index"
+        class="channel__item"
+      >
+        <router-link :to="`/list/${index}`">{{ chanel }}</router-link>
+      </div>
     </div>
     <el-divider class="channel__divider" direction="vertical"></el-divider>
     <div class="channel__mode">
-      <div v-for="i in 12" :key="i" class="channel__item">新闻</div>
+      <div
+        v-for="(chanel, index) in CHANELS.slice(0, 12)"
+        :key="index"
+        class="channel__item"
+      >
+        <router-link :to="`/list/${index}`">{{ chanel }}</router-link>
+      </div>
     </div>
     <el-divider class="channel__divider" direction="vertical"></el-divider>
     <div class="channel__mode2">
-      <div class="channel__item">交易</div>
-      <div class="channel__item">理财</div>
+      <div class="channel__item">
+        <router-link :to="`/list/12`">{{ CHANELS[12] }}</router-link>
+      </div>
+      <div class="channel__item">
+        <router-link :to="`/list/13`">{{ CHANELS[13] }}</router-link>
+      </div>
       <el-dropdown placement="bottom">
         <span class="el-dropdown-link">
           更多<i class="el-icon-arrow-down el-icon--right"></i>
@@ -40,29 +72,27 @@
 </template>
 
 <script>
+import { CHANELS } from "@/assets/js/const";
 export default {
   data() {
     return {
-      demoList: [
-        { name: "体育" },
-        { name: "娱乐" },
-        { name: "实事" },
-        { name: "军事" },
-        { name: "时尚" },
-        { name: "历史" },
-        { name: "人文" },
-        { name: "股票" },
-        { name: "买车" },
-        { name: "天气" },
-        { name: "留学" },
-        { name: "司法" },
-      ],
+      CHANELS,
     };
   },
 };
 </script>
 
 <style lang="less" scoped>
+a {
+  text-decoration: none;
+  color: #606266;
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
+}
 .channel {
   width: 100%;
   margin-top: 0.8rem;
@@ -85,6 +115,9 @@ export default {
     line-height: 0.52rem;
     text-align: center;
     white-space: nowrap;
+    &:hover {
+      cursor: pointer;
+    }
   }
   &__divider {
     height: 1.3rem;
